@@ -1,10 +1,30 @@
 import { Link, useLocation } from "react-router-dom";
 
 const ProductDetails = () => {
-  const { state: product } = useLocation();
-
   const { img, title, description, category, brand, rating, price } = product;
-  return (
+  const { state: product } = useLocation();
+ 
+  let cart = []; // initialize an empty cart array
+ 
+  function addToCart() {
+    // get product details from HTML elements
+    let title = document.getElementById("title").textContent;
+    let price = document.getElementById("price").textContent;
+  
+    // create an object to represent the item
+    let product= {
+      title: title,
+      price: price
+    };
+  
+    // add the product the cart
+    cart.push(product);
+  
+    // update the cart display
+    let cartProductCount = document.getElementById("cart-product-count");
+    cartProductCount.textContent = cart.length;
+  
+    return (
     <section className="flex flex-col gap-16 py-10 bg-gray-100">
       <div className="container mx-auto flex justify-around  items-center w-[80%]">
         <div className="w-96 flex justify-end">
@@ -41,7 +61,7 @@ const ProductDetails = () => {
             </span>
           </h3>
           <button
-            onClick={() => console.log("ksk")}
+            onClick={()=>{addToCart()}}
             className="bg-sky-500 text-sky-50 px-2 py-1 mt-4"
           >
             Add to cart
@@ -55,7 +75,8 @@ const ProductDetails = () => {
         &larr; Go to Product
       </Link>
     </section>
-  );
+  )
+    }
 };
 
 export default ProductDetails;
